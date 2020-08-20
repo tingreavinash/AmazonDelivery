@@ -10,11 +10,11 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.avinash</groupId>
-	<artifactId>HFLogViewer_REST</artifactId>
+	<artifactId>AmazonDelivery</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>HFLogViewer_REST</name>
-	<description>Project for accessing available hotfix details (REST).
+	<name>AmazonDelivery</name>
+	<description>Project for managing Amazon Parcel Delivery.
 	</description>
 
 	<properties>
