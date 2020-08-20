@@ -4,6 +4,7 @@
  */
 package com.avinash.parceldelivery.Controller;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.avinash.parceldelivery.Model.Order;
-
+import com.avinash.parceldelivery.Service.ExcelToDatabase;
 import com.avinash.parceldelivery.Service.OrderService;
 
 @RestController
@@ -28,6 +29,9 @@ public class RestApiController {
 	@Autowired
 	OrderService orderService;
 
+	@Autowired
+	ExcelToDatabase dataService;
+	
 	@RequestMapping(value = "/getOrderDetails", method = RequestMethod.GET)
 	public Order getOrderDetails(@RequestParam String orderid) throws InterruptedException, ExecutionException {
 		return orderService.getOrderDetails(orderid);
@@ -67,6 +71,12 @@ public class RestApiController {
         order.setIs_sold_by_ab(false);
 		*/
 		return orderService.saveOrderDetails(order);
+    }
+
+	@RequestMapping(value = "/loadData", method = RequestMethod.POST)
+    public long loadData(  ) throws InterruptedException, ExecutionException, IOException {
+		
+		return dataService.mergeExcelDataToDB();
     }
 
 

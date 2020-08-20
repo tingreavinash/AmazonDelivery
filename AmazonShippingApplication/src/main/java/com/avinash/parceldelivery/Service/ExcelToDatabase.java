@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,45 +20,36 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.avinash.parceldelivery.Controller.RestApiController;
 import com.avinash.parceldelivery.Model.Order;
 import com.monitorjbl.xlsx.StreamingReader;
 import com.monitorjbl.xlsx.impl.StreamingCell;
 
+@Service
 public class ExcelToDatabase {
 	private static final Logger LOG = LoggerFactory.getLogger(ExcelToDatabase.class);
 	public static List<String> row_values = new ArrayList<String>();
 	public static List<String> nested_list = new ArrayList<String>();
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	@Autowired
+	OrderService orderService;
+	public long mergeExcelDataToDB() throws IOException {
 		
-		
-		try {
-			long total_records = mergeExcelDataToDB();
-		System.out.println("Total records : "+total_records);
-		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
-	public static long mergeExcelDataToDB() throws IOException {
 		long total_records = 0;
 		InputStream fis = null;
 		Workbook workbook = null;
 		Sheet sheet;
 		try {
-			File file = new File("C:\\Work\\Projects\\Hotfix Viewer Spring\\Input order file.xlsx");
+			File file = new File("D:\\Practice\\Firebase\\Input order file.xlsx");
 			fis = new FileInputStream(file);
 			workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(fis);
 			sheet = workbook.getSheetAt(0);
 
 			int startRow = 1;
 			int endRow = sheet.getLastRowNum();
-			LOG.info("Last row:"+endRow);
 			
 			
 			LOG.info("Data loading started: " + new Date());
@@ -69,9 +61,10 @@ public class ExcelToDatabase {
 
 					row_values = getListFromRow(r);
 					
-					LOG.info("\nRow number:"+r.getRowNum());
 					order = createObjectFromlist(row_values, total_records);
-
+					String result = orderService.saveOrderDetails(order);
+					LOG.info("Result "+r.getRowNum()+" :"+result);
+					
 					//ecpService.addECP(ecplog);
 					total_records++;
 					row_values.clear();
@@ -114,7 +107,7 @@ public class ExcelToDatabase {
 		order.setBuyer_phone_number(row_values.get(Constants.buyer_phone_number ));
 		order.setSku(row_values.get(Constants.sku ));
 		order.setProduct_name(row_values.get(Constants.product_name ));
-		LOG.info("Qty purchaged: "+row_values.get(Constants.quantity_purchased));
+		
 		order.setQuantity_purchased( Integer.parseInt(row_values.get(Constants.quantity_purchased)  ));
 		order.setQuantity_shipped(Integer.parseInt(row_values.get(Constants.quantity_shipped) ));
 		order.setQuantity_to_ship(Integer.parseInt(row_values.get(Constants.quantity_to_ship) ));
@@ -156,6 +149,12 @@ public class ExcelToDatabase {
 				c = new StreamingCell(i, row.getRowNum(), true);
 			}
 			
+			
+			if (c.getColumnIndex() == 1 || c.getColumnIndex() == 9) {
+				Object o = c.getNumericCellValue();
+				nested_list.add(new BigDecimal(o.toString()).toPlainString());
+				continue;
+			}
 
 			if (c.getColumnIndex() == 2 || c.getColumnIndex() == 3 || c.getColumnIndex() == 4 || c.getColumnIndex() == 5) {
 				DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
@@ -169,7 +168,6 @@ public class ExcelToDatabase {
 				}
 				continue;
 			}
-
 			if (c.getCellType() == CellType.NUMERIC) {
 				int val = (int) c.getNumericCellValue();
 				nested_list.add(String.valueOf(val));
