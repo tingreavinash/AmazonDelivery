@@ -1,0 +1,23 @@
+excelFilePath: C:\Work\Projects\Hotfix Viewer Spring\Executables\Excel File\ECPLog.xlsm
+application-description: REST application for accessing Hotfix data from Database.
+application-version: v3
+
+key:
+  SERVICE_ACCOUNT_FILE: D:\Practice\Firebase\serviceAccount.json
+  DATABASE_URL: https://stayhelp-v1.firebaseio.com
+
+spring:  profiles:    active: dev  application:    name: AmazonShippingApplication
+---
+spring:  profiles: devserver:  port: 7777
+  
+---
+spring:
+  profiles: prod
+server:
+  port: 4569
+  
+
+---
+logging:  file:    name: AplicationBackend.log
+  pattern:    file: "%d %p %c{1.} [%t] %m%n"
+    console: "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
