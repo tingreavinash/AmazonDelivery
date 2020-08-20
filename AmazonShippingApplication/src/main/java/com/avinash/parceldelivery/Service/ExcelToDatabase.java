@@ -69,6 +69,7 @@ public class ExcelToDatabase {
 
 					row_values = getListFromRow(r);
 					
+					LOG.info("\nRow number:"+r.getRowNum());
 					order = createObjectFromlist(row_values, total_records);
 
 					//ecpService.addECP(ecplog);
@@ -113,6 +114,7 @@ public class ExcelToDatabase {
 		order.setBuyer_phone_number(row_values.get(Constants.buyer_phone_number ));
 		order.setSku(row_values.get(Constants.sku ));
 		order.setProduct_name(row_values.get(Constants.product_name ));
+		LOG.info("Qty purchaged: "+row_values.get(Constants.quantity_purchased));
 		order.setQuantity_purchased( Integer.parseInt(row_values.get(Constants.quantity_purchased)  ));
 		order.setQuantity_shipped(Integer.parseInt(row_values.get(Constants.quantity_shipped) ));
 		order.setQuantity_to_ship(Integer.parseInt(row_values.get(Constants.quantity_to_ship) ));
@@ -155,7 +157,7 @@ public class ExcelToDatabase {
 			}
 			
 
-			if (c.getColumnIndex() == 11 || c.getColumnIndex() == 12 || c.getColumnIndex() == 13) {
+			if (c.getColumnIndex() == 2 || c.getColumnIndex() == 3 || c.getColumnIndex() == 4 || c.getColumnIndex() == 5) {
 				DateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
 				if (c.getCellType() == CellType.NUMERIC && c.getDateCellValue() != null) {
 					String date = df.format(c.getDateCellValue());
