@@ -21,6 +21,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.avinash.parceldelivery.Controller.RestApiController;
@@ -36,6 +37,9 @@ public class ExcelToDatabase {
 	
 	@Autowired
 	OrderService orderService;
+	@Value("${key.ORDER_EXCEL_FILE}")
+	private String ORDER_EXCEL_FILE; 
+	
 	public long mergeExcelDataToDB() throws IOException {
 		
 		long total_records = 0;
@@ -43,7 +47,7 @@ public class ExcelToDatabase {
 		Workbook workbook = null;
 		Sheet sheet;
 		try {
-			File file = new File("D:\\Practice\\Firebase\\Input order file.xlsx");
+			File file = new File(ORDER_EXCEL_FILE);
 			fis = new FileInputStream(file);
 			workbook = StreamingReader.builder().rowCacheSize(100).bufferSize(4096).open(fis);
 			sheet = workbook.getSheetAt(0);
@@ -65,7 +69,6 @@ public class ExcelToDatabase {
 					String result = orderService.saveOrderDetails(order);
 					LOG.info("Result "+r.getRowNum()+" :"+result);
 					
-					//ecpService.addECP(ecplog);
 					total_records++;
 					row_values.clear();
 				}

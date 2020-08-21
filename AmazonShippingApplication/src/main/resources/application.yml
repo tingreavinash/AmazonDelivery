@@ -5,7 +5,8 @@ application-version: v3
 key:
   SERVICE_ACCOUNT_FILE: D:\Practice\Firebase\serviceAccount.json
   DATABASE_URL: https://stayhelp-v1.firebaseio.com
-
+  ORDER_EXCEL_FILE: D:\Practice\Firebase\Input order file.xlsx
+  
 spring:  profiles:    active: dev  application:    name: AmazonShippingApplication
 ---
 spring:  profiles: devserver:  port: 7777
