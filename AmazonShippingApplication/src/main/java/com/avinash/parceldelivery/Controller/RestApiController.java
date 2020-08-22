@@ -41,28 +41,40 @@ public class RestApiController {
 	
 	@RequestMapping(value = "/getOrderDetails", method = RequestMethod.GET)
 	public Order getOrderDetails(@RequestParam String orderid) throws InterruptedException, ExecutionException {
+		
+		
 		return orderService.getOrderDetails(orderid);
 	}
 	
 	@RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)
 	public User getUserDetails(@RequestParam String username) throws InterruptedException, ExecutionException {
-		return userService.getUserDetails(username);
+		//TODO: Remote below User object while firebase testing
+		User user = new User();
+		user.setUsername("avinash");
+		user.setPassword("avinash123");
+		user.setEnabled(true);
+		user.setAccountNonExpired(true);
+		user.setAccountNonLocked(true);
+		user.setCredentialsNonExpired(true);
+		List<String> roles = new ArrayList<String>();
+		roles.add("USER");
+		user.setAuthorities(roles);
+		
+		return user;
+		//return userService.getUserDetails(username);
 	}
 
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
     public String createUser() throws InterruptedException, ExecutionException {
 		User user = new User();
-		
 		user.setUsername("avinash");
 		user.setPassword("avinash123");
 		user.setEnabled(true);
 		user.setAccountNonExpired(true);
 		user.setAccountNonLocked(true);
 		user.setCredentialsNonExpired(false);
-		
 		List<String> roles = new ArrayList<String>();
 		roles.add("USER");
-		
 		user.setAuthorities(roles);
 		
 		return userService.saveUserDetails(user);

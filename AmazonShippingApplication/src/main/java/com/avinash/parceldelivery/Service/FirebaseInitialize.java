@@ -22,8 +22,8 @@ public class FirebaseInitialize {
 	@Value("${key.DATABASE_URL}")
 	private String DATABASE_URL; 
     
-	
-	@PostConstruct
+	//TODO: remove below comment while firebase testing
+	//@PostConstruct
     public void initialize() {
         try {
         	
