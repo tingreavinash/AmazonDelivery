@@ -79,6 +79,11 @@ public class RestApiController {
 		return dataService.mergeExcelDataToDB();
     }
 
+	@RequestMapping(value = "/check", method = RequestMethod.GET)
+    public String check(  ) throws InterruptedException, ExecutionException, IOException {
+		
+		return "REST working!";
+    }
 
 	@RequestMapping(value = "/updateOrder", method = RequestMethod.PUT)
     public String updateOrder(@RequestBody Order order  ) throws InterruptedException, ExecutionException {

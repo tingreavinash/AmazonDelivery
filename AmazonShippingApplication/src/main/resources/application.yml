@@ -7,6 +7,7 @@ key:
   DATABASE_URL: https://stayhelp-v1.firebaseio.com
 
 spring:  profiles:    active: dev  application:    name: AmazonShippingApplication
+
 ---
 spring:  profiles: devserver:  port: 7777
   
