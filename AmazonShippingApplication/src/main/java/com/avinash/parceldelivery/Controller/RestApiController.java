@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.avinash.parceldelivery.Model.Order;
+import com.avinash.parceldelivery.Model.User;
 import com.avinash.parceldelivery.Service.ExcelToDatabase;
 import com.avinash.parceldelivery.Service.OrderService;
+import com.avinash.parceldelivery.Service.UserService;
 
 @RestController
 @RequestMapping("/ShippingApplication")
@@ -30,6 +32,9 @@ public class RestApiController {
 	OrderService orderService;
 
 	@Autowired
+	UserService userService;
+
+	@Autowired
 	ExcelToDatabase dataService;
 	
 	@RequestMapping(value = "/getOrderDetails", method = RequestMethod.GET)
@@ -37,7 +42,17 @@ public class RestApiController {
 		return orderService.getOrderDetails(orderid);
 	}
 	
+	@RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)
+	public User getUserDetails(@RequestParam String username) throws InterruptedException, ExecutionException {
+		return userService.getUserDetails(username);
+	}
 
+	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
+    public String createUser(@RequestBody User user) throws InterruptedException, ExecutionException {
+		return userService.saveUserDetails(user);
+	}
+
+	
 	@RequestMapping(value = "/createOrder", method = RequestMethod.POST)
     public String createOrder(@RequestBody Order order) throws InterruptedException, ExecutionException {
 		/*

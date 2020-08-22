@@ -30,11 +30,11 @@ public class OrderService {
 
         DocumentSnapshot document = future.get();
 
-        Order patient = null;
+        Order order = null;
 
         if(document.exists()) {
-            patient = document.toObject(Order.class);
-            return patient;
+        	order = document.toObject(Order.class);
+            return order;
         }else {
             return null;
         }

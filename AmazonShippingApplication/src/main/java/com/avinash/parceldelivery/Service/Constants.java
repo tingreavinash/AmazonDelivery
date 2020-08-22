@@ -41,4 +41,6 @@ public class Constants {
 
 	//Firebase Constants
 	public static final String ORDER_COLLECTION  = "orders";
+	public static final String USER_COLLECTION  = "users";
+	
 }
