@@ -2,6 +2,8 @@ package com.avinash.parceldelivery.Service;
 
 import java.util.concurrent.ExecutionException;
 
+import org.springframework.stereotype.Service;
+
 import com.avinash.parceldelivery.Model.Order;
 import com.avinash.parceldelivery.Model.User;
 import com.google.api.core.ApiFuture;
@@ -11,6 +13,7 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 
+@Service
 public class UserService {
 
 	public User getUserDetails(String username) throws InterruptedException, ExecutionException {

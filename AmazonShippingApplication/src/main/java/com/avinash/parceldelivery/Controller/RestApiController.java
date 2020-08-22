@@ -5,6 +5,8 @@
 package com.avinash.parceldelivery.Controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 
@@ -48,8 +50,23 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
-    public String createUser(@RequestBody User user) throws InterruptedException, ExecutionException {
+    public String createUser() throws InterruptedException, ExecutionException {
+		User user = new User();
+		
+		user.setUsername("avinash");
+		user.setPassword("avinash123");
+		user.setEnabled(true);
+		user.setAccountNonExpired(true);
+		user.setAccountNonLocked(true);
+		user.setCredentialsNonExpired(false);
+		
+		List<String> roles = new ArrayList<String>();
+		roles.add("USER");
+		
+		user.setAuthorities(roles);
+		
 		return userService.saveUserDetails(user);
+		
 	}
 
 	
