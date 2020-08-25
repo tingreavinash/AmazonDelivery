@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.avinash.parceldelivery.Model.Mail;
 import com.avinash.parceldelivery.Model.Order;
 import com.avinash.parceldelivery.Model.User;
 import com.avinash.parceldelivery.Service.ExcelToDatabase;
+import com.avinash.parceldelivery.Service.MailService;
 import com.avinash.parceldelivery.Service.OrderService;
 import com.avinash.parceldelivery.Service.UserService;
 
@@ -38,6 +40,9 @@ public class RestApiController {
 
 	@Autowired
 	ExcelToDatabase dataService;
+	
+	@Autowired
+	MailService mailService;
 	
 	@RequestMapping(value = "/getOrderDetails", method = RequestMethod.GET)
 	public Order getOrderDetails(@RequestParam String orderid) throws InterruptedException, ExecutionException {
@@ -120,6 +125,13 @@ public class RestApiController {
 		user.setAuthorities(roles);
 		
 		return userService.saveUserDetails(user);
+		
+	}
+
+	@RequestMapping(value = "/sendMail", method = RequestMethod.POST)
+    public String sendMail(@RequestBody Mail mail) throws InterruptedException, ExecutionException {
+		
+		return mailService.sendMail(mail);
 		
 	}
 
