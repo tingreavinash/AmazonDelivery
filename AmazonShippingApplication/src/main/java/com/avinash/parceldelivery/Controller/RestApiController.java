@@ -92,6 +92,12 @@ public class RestApiController {
 		//TODO: Remove below comment while firebase integration
 		//return orderService.getOrderDetails(orderid);
 	}
+
+	@RequestMapping(value = "/getAllOrders", method = RequestMethod.GET)
+	public List<Order> getAllOrders() throws InterruptedException, ExecutionException {
+		return orderService.getAllOrders();	
+	}
+
 	
 	@RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)
 	public User getUserDetails(@RequestParam String username) throws InterruptedException, ExecutionException {
