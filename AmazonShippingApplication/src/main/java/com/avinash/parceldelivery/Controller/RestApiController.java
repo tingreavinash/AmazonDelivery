@@ -50,10 +50,10 @@ public class RestApiController {
 		return orderService.getOrderDetails(orderid);
 	}
 
-	/*@RequestMapping(value = "/getAllOrders", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAllOrders", method = RequestMethod.GET)
 	public List<Order> getAllOrders() throws InterruptedException, ExecutionException {
 		return orderService.getAllOrders();	
-	}*/
+	}
 
 	
 	@RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)

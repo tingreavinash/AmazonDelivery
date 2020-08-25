@@ -27,7 +27,7 @@ public class OrderService {
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
     
-/*    public List<Order> getAllOrders() throws InterruptedException, ExecutionException{
+    public List<Order> getAllOrders() throws InterruptedException, ExecutionException{
     	Firestore dbFirestore = FirestoreClient.getFirestore();
     	List<Order> orders = new ArrayList<Order>();
     	//asynchronously retrieve all documents
@@ -40,7 +40,7 @@ public class OrderService {
     	}
     	return orders;
     }
-*/
+
     public Order getOrderDetails(String name) throws InterruptedException, ExecutionException {
         
     	Firestore dbFirestore = FirestoreClient.getFirestore();DocumentReference documentReference = dbFirestore.collection(Constants.ORDER_COLLECTION).document(name);

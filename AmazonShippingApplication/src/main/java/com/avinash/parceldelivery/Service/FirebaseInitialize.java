@@ -23,7 +23,7 @@ public class FirebaseInitialize {
 	private String DATABASE_URL; 
     
 	//TODO: remove below comment while firebase testing
-	//@PostConstruct
+	@PostConstruct
     public void initialize() {
         try {
         	
