@@ -19,14 +19,16 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class OrderService {
 
-    public static Firestore dbFirestore = FirestoreClient.getFirestore();
+    
 
     public String saveOrderDetails(Order order) throws InterruptedException, ExecutionException {
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(Constants.ORDER_COLLECTION).document(order.getOrder_id()).set(order);
+    	Firestore dbFirestore = FirestoreClient.getFirestore();
+    	ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(Constants.ORDER_COLLECTION).document(order.getOrder_id()).set(order);
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
     
     public List<Order> getAllOrders() throws InterruptedException, ExecutionException{
+    	Firestore dbFirestore = FirestoreClient.getFirestore();
     	List<Order> orders = new ArrayList<Order>();
     	//asynchronously retrieve all documents
     	ApiFuture<QuerySnapshot> future = dbFirestore.collection(Constants.ORDER_COLLECTION).get();
@@ -40,7 +42,8 @@ public class OrderService {
     }
 
     public Order getOrderDetails(String name) throws InterruptedException, ExecutionException {
-        DocumentReference documentReference = dbFirestore.collection(Constants.ORDER_COLLECTION).document(name);
+        
+    	Firestore dbFirestore = FirestoreClient.getFirestore();DocumentReference documentReference = dbFirestore.collection(Constants.ORDER_COLLECTION).document(name);
         ApiFuture<DocumentSnapshot> future = documentReference.get();
 
         DocumentSnapshot document = future.get();
@@ -58,12 +61,14 @@ public class OrderService {
     
 
     public String updateOrderDetails(Order order) throws InterruptedException, ExecutionException {
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(Constants.ORDER_COLLECTION).document(order.getOrder_id()).set(order);
+    	Firestore dbFirestore = FirestoreClient.getFirestore();
+    	ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection(Constants.ORDER_COLLECTION).document(order.getOrder_id()).set(order);
         return collectionsApiFuture.get().getUpdateTime().toString();
     }
 
     public String deleteOrder(String orderid) throws InterruptedException, ExecutionException {
-        //TODO: Add condition to check if document with id exists, Return appropriate message
+    	Firestore dbFirestore = FirestoreClient.getFirestore();
+    	//TODO: Add condition to check if document with id exists, Return appropriate message
         ApiFuture<WriteResult> writeResult = dbFirestore.collection(Constants.ORDER_COLLECTION).document(orderid).delete();
         
         return "Document with Order ID "+orderid+" has been deleted";
