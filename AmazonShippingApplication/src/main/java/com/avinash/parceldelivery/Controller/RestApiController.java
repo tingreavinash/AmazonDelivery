@@ -7,6 +7,7 @@ package com.avinash.parceldelivery.Controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 
 
@@ -44,14 +45,23 @@ public class RestApiController {
 	@Autowired
 	MailService mailService;
 	
+	//List<Order> sampleList = new CopyOnWriteArrayList<Order>();
+	
 	@RequestMapping(value = "/getOrderDetails", method = RequestMethod.GET)
 	public Order getOrderDetails(@RequestParam String orderid) throws InterruptedException, ExecutionException {
-	    
+		/*Order order = new Order();
+		for (Order o : sampleList) {
+			if(orderid.equals(o.getOrder_id())) {
+				order = o;
+			}
+		}
+		return order;*/
 		return orderService.getOrderDetails(orderid);
 	}
 
 	@RequestMapping(value = "/getAllOrders", method = RequestMethod.GET)
 	public List<Order> getAllOrders() throws InterruptedException, ExecutionException {
+		//return sampleList;
 		return orderService.getAllOrders();	
 	}
 
@@ -132,6 +142,8 @@ public class RestApiController {
         order.setIs_prime(false);
         order.setIs_sold_by_ab(false);
 		*/
+		/*sampleList.add(order);
+		return "Order added";*/
 		return orderService.saveOrderDetails(order);
     }
 
@@ -149,13 +161,26 @@ public class RestApiController {
 
 	@RequestMapping(value = "/updateOrder", method = RequestMethod.PUT)
     public String updateOrder(@RequestBody Order order  ) throws InterruptedException, ExecutionException {
-        return orderService.updateOrderDetails(order);
+        /*for (Order o: sampleList) {
+        	if(o.getOrder_id().equals(order.getOrder_id())) {
+        		sampleList.remove(o);
+                sampleList.add(order);
+        	}
+        }
+        return "Order updated";*/
+		return orderService.updateOrderDetails(order);
     }
 
 
 	@RequestMapping(value = "/deleteOrder", method = RequestMethod.DELETE)
     public String deleteOrder(@RequestParam String orderid) throws InterruptedException, ExecutionException{
-        return orderService.deleteOrder(orderid);
+		/*for (Order o: sampleList) {
+        	if(o.getOrder_id().equals(orderid)) {
+        		sampleList.remove(o);
+        	}
+        }
+		return "Order Deleted";*/
+		return orderService.deleteOrder(orderid);
     }
 
 }
