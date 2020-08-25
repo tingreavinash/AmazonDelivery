@@ -46,63 +46,20 @@ public class RestApiController {
 	
 	@RequestMapping(value = "/getOrderDetails", method = RequestMethod.GET)
 	public Order getOrderDetails(@RequestParam String orderid) throws InterruptedException, ExecutionException {
-	    Order order = new Order();
-	    if("406-7487687-8756316".equals(orderid)) {
-		    order.setOrder_id("406-7487687-8756316" );
-		    order.setOrder_item_id("26053826341739" );
-		    order.setPurchase_date("2020-08-16T11:08:18+00:00" );
-		    order.setPayments_date("2020-08-16T11:08:18+00:00" );
-		    order.setReporting_date("2020-08-16T11:46:13+00:00" );
-		    order.setPromise_date("2020-08-18T18:29:59+00:00" );
-		    order.setDays_past_promise("-2" );
-		    order.setBuyer_email("zdhq0x5mw5j6tfz@marketplace.amazon.in" );
-		    order.setBuyer_name("Mariaselvaraj" );
-		    order.setBuyer_phone_number("9940636594" );
-		    order.setSku("MS25" );
-		    order.setProduct_name("Kejia Tactile Switch Micro Push To on Button - Set of 25 Pcs" );
-		    order.setQuantity_purchased( 1  );
-		    order.setQuantity_shipped(0 );
-		    order.setQuantity_to_ship(1 );
-		    order.setShip_service_level("Standard" );
-		    order.setShip_service_name("Std IN MFN2" );
-		    order.setRecipient_name("Maria selvaraj D" );
-		    order.setShip_address_1("F1, Plat no 82, Grand Eternia," );
-		    order.setShip_address_2("2nd street Senthil nagar , Seevaram, Perungudi" );
-		    order.setShip_address_3(null );
-		    order.setShip_city("CHENNAI" );
-		    order.setShip_state("TAMIL NADU" );
-		    order.setShip_postal_code(600096);
-		    order.setShip_country("IN" );
-		    order.setPayment_method(null );
-		    order.setCod_collectible_amount(null );
-		    order.setAlready_paid(null );
-		    order.setPayment_method_fee(null );
-		    order.setIs_business_order(  false );
-		    order.setPurchase_order_number(null );
-		    order.setPrice_designation(null );
-		    order.setIs_prime(false );
-		    order.setFulfilled_by(null );
-		    order.setShipment_status(null );
-		    order.setIs_sold_by_ab(true );
-	    	
-	    }
-
-	    return order;
-
-		//TODO: Remove below comment while firebase integration
-		//return orderService.getOrderDetails(orderid);
+	    
+		return orderService.getOrderDetails(orderid);
 	}
 
-	@RequestMapping(value = "/getAllOrders", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/getAllOrders", method = RequestMethod.GET)
 	public List<Order> getAllOrders() throws InterruptedException, ExecutionException {
 		return orderService.getAllOrders();	
-	}
+	}*/
 
 	
 	@RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)
 	public User getUserDetails(@RequestParam String username) throws InterruptedException, ExecutionException {
 		//TODO: Remote below User object while firebase testing
-		User user = new User();
+		/*User user = new User();
 		user.setUsername("avinash");
 		user.setPassword("avinash123");
 		user.setEnabled(true);
@@ -113,13 +70,14 @@ public class RestApiController {
 		roles.add("USER");
 		user.setAuthorities(roles);
 		
-		return user;
-		//return userService.getUserDetails(username);
+		return user;*/
+		
+		return userService.getUserDetails(username);
 	}
 
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
-    public String createUser() throws InterruptedException, ExecutionException {
-		User user = new User();
+    public String createUser(@RequestBody User user) throws InterruptedException, ExecutionException {
+		/*User user = new User();
 		user.setUsername("avinash");
 		user.setPassword("avinash123");
 		user.setEnabled(true);
@@ -129,7 +87,7 @@ public class RestApiController {
 		List<String> roles = new ArrayList<String>();
 		roles.add("USER");
 		user.setAuthorities(roles);
-		
+		*/
 		return userService.saveUserDetails(user);
 		
 	}
