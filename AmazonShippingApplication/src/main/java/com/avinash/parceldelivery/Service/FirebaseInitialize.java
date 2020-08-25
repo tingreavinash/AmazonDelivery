@@ -23,6 +23,7 @@ public class FirebaseInitialize {
 	private String DATABASE_URL; 
     
 	//TODO: remove below comment while firebase testing
+	//If below tag doesn't present you will see exception: FirebaseApp with name [DEFAULT] doesn't exist
 	@PostConstruct
     public void initialize() {
         try {
