@@ -142,8 +142,8 @@ public class RestApiController {
         order.setIs_prime(false);
         order.setIs_sold_by_ab(false);
 		*/
-		/*sampleList.add(order);
-		return "Order added";*/
+		//sampleList.add(order);
+		//return "Order added";
 		return orderService.saveOrderDetails(order);
     }
 
@@ -170,7 +170,15 @@ public class RestApiController {
         return "Order updated";*/
 		return orderService.updateOrderDetails(order);
     }
-
+	
+	@RequestMapping(value = "/updateBatchOrders", method = RequestMethod.PUT)
+    public List<String> updateBatchOrders(@RequestBody List<Order> orders  ) throws InterruptedException, ExecutionException {
+		
+		/*sampleList.clear();
+		sampleList.addAll(orders);
+        return "Orders updated";*/
+		return orderService.updateBatchOrders(orders);
+    }
 
 	@RequestMapping(value = "/deleteOrder", method = RequestMethod.DELETE)
     public String deleteOrder(@RequestParam String orderid) throws InterruptedException, ExecutionException{
