@@ -7,12 +7,14 @@ import com.google.firebase.FirebaseOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.io.FileInputStream;
 
 @Service
+@Profile("prod")
 public class FirebaseInitialize {
 	private static final Logger LOG = LoggerFactory.getLogger(FirebaseInitialize.class);
 	
@@ -25,7 +27,7 @@ public class FirebaseInitialize {
 	//TODO: remove below comment while firebase testing
 	//If below tag doesn't present you will see exception: FirebaseApp with name [DEFAULT] doesn't exist
 	@PostConstruct
-    public void initialize() {
+	public void initialize() {
         try {
         	
         	LOG.info("Service account file: "+SERVICE_ACCOUNT_FILE);

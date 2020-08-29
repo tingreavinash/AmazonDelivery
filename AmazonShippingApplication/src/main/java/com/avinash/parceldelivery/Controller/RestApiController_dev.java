@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,9 +30,10 @@ import com.avinash.parceldelivery.Service.OrderService;
 import com.avinash.parceldelivery.Service.UserService;
 
 @RestController
+@Profile("dev")
 @RequestMapping("/ShippingApplication")
-public class RestApiController {
-	private static final Logger LOG = LoggerFactory.getLogger(RestApiController.class);
+public class RestApiController_dev {
+	private static final Logger LOG = LoggerFactory.getLogger(RestApiController_dev.class);
 
 	@Autowired
 	OrderService orderService;
@@ -45,31 +47,31 @@ public class RestApiController {
 	@Autowired
 	MailService mailService;
 	
-	//List<Order> sampleList = new CopyOnWriteArrayList<Order>();
+	List<Order> sampleList = new CopyOnWriteArrayList<Order>();
 	
 	@RequestMapping(value = "/getOrderDetails", method = RequestMethod.GET)
 	public Order getOrderDetails(@RequestParam String orderid) throws InterruptedException, ExecutionException {
-		/*Order order = new Order();
+		Order order = new Order();
 		for (Order o : sampleList) {
 			if(orderid.equals(o.getOrder_id())) {
 				order = o;
 			}
 		}
-		return order;*/
-		return orderService.getOrderDetails(orderid);
+		return order;
+		//return orderService.getOrderDetails(orderid);
 	}
 
 	@RequestMapping(value = "/getAllOrders", method = RequestMethod.GET)
 	public List<Order> getAllOrders() throws InterruptedException, ExecutionException {
-		//return sampleList;
-		return orderService.getAllOrders();	
+		return sampleList;
+		//return orderService.getAllOrders();	
 	}
 
 	
 	@RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)
 	public User getUserDetails(@RequestParam String username) throws InterruptedException, ExecutionException {
 		//TODO: Remote below User object while firebase testing
-		/*User user = new User();
+		User user = new User();
 		user.setUsername("avinash");
 		user.setPassword("avinash123");
 		user.setEnabled(true);
@@ -80,9 +82,9 @@ public class RestApiController {
 		roles.add("USER");
 		user.setAuthorities(roles);
 		
-		return user;*/
+		return user;
 		
-		return userService.getUserDetails(username);
+		//return userService.getUserDetails(username);
 	}
 
 	@RequestMapping(value = "/createUser", method = RequestMethod.POST)
@@ -142,9 +144,9 @@ public class RestApiController {
         order.setIs_prime(false);
         order.setIs_sold_by_ab(false);
 		*/
-		//sampleList.add(order);
-		//return "Order added";
-		return orderService.saveOrderDetails(order);
+		sampleList.add(order);
+		return "Order added";
+		//return orderService.saveOrderDetails(order);
     }
 
 	@RequestMapping(value = "/loadData", method = RequestMethod.POST)
@@ -156,39 +158,43 @@ public class RestApiController {
 	@RequestMapping(value = "/check", method = RequestMethod.GET)
     public String check(  ) throws InterruptedException, ExecutionException, IOException {
 		
-		return "REST working!";
+		return "DEV - REST working!";
     }
 
 	@RequestMapping(value = "/updateOrder", method = RequestMethod.PUT)
     public String updateOrder(@RequestBody Order order  ) throws InterruptedException, ExecutionException {
-        /*for (Order o: sampleList) {
+        for (Order o: sampleList) {
         	if(o.getOrder_id().equals(order.getOrder_id())) {
         		sampleList.remove(o);
                 sampleList.add(order);
         	}
         }
-        return "Order updated";*/
-		return orderService.updateOrderDetails(order);
+        return "Order updated";
+		//return orderService.updateOrderDetails(order);
     }
 	
 	@RequestMapping(value = "/updateBatchOrders", method = RequestMethod.PUT)
     public List<String> updateBatchOrders(@RequestBody List<Order> orders  ) throws InterruptedException, ExecutionException {
 		
-		/*sampleList.clear();
+		sampleList.clear();
 		sampleList.addAll(orders);
-        return "Orders updated";*/
-		return orderService.updateBatchOrders(orders);
+		List<String> output = new ArrayList<String>();
+        for (Order o: orders) {
+        	output.add(o.getOrder_id()+" updated.");
+        }
+        return output;
+		//return orderService.updateBatchOrders(orders);
     }
 
 	@RequestMapping(value = "/deleteOrder", method = RequestMethod.DELETE)
     public String deleteOrder(@RequestParam String orderid) throws InterruptedException, ExecutionException{
-		/*for (Order o: sampleList) {
+		for (Order o: sampleList) {
         	if(o.getOrder_id().equals(orderid)) {
         		sampleList.remove(o);
         	}
         }
-		return "Order Deleted";*/
-		return orderService.deleteOrder(orderid);
+		return "Order Deleted";
+		//return orderService.deleteOrder(orderid);
     }
 
 }
