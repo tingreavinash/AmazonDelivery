@@ -4,8 +4,13 @@
  */
 package com.avinash.parceldelivery.Controller;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
@@ -15,6 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +35,7 @@ import com.avinash.parceldelivery.Service.ExcelToDatabase;
 import com.avinash.parceldelivery.Service.MailService;
 import com.avinash.parceldelivery.Service.OrderService;
 import com.avinash.parceldelivery.Service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @Profile("dev")
@@ -47,7 +55,34 @@ public class RestApiController_dev {
 	@Autowired
 	MailService mailService;
 	
-	List<Order> sampleList = new CopyOnWriteArrayList<Order>();
+	public static List<Order> sampleList = new CopyOnWriteArrayList<Order>();
+	public static Order[] orderArr;
+	static {
+		Resource resource = new ClassPathResource("sample_orders.json");
+		try {
+			File file = resource.getFile();
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String s;
+			StringBuffer sb = new StringBuffer();
+			while((s = br.readLine())!=null) {
+				sb.append(s);
+			}
+			ObjectMapper mapper = new ObjectMapper();
+			orderArr = mapper.readValue(sb.toString(), Order[].class);
+			br.close();
+			
+			for (Order o : orderArr) {
+				sampleList.add(o);
+			}
+			LOG.info("****List Initialized.");
+		
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void addtolist(Order o) {
+		sampleList.add(o);
+	}
 	
 	@RequestMapping(value = "/getOrderDetails", method = RequestMethod.GET)
 	public Order getOrderDetails(@RequestParam String orderid) throws InterruptedException, ExecutionException {

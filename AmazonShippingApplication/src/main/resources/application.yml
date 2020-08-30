@@ -5,7 +5,7 @@ key:
   MAIL_FROM: atultingre.test@gmail.com
   MAIL_PASS: Amazon@1122
 
-spring:  profiles:    active: prod  application:    name: AmazonShippingApplication
+spring:  profiles:    active: dev  application:    name: AmazonShippingApplication
 ---
 spring:  profiles: devserver:  port: 7777
   

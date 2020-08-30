@@ -1,5 +1,7 @@
 package com.avinash.parceldelivery.Model;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 public class Order {
 	private String order_id;
 	private String order_item_id;
@@ -42,8 +44,15 @@ public class Order {
 	private String courier_code;
 	private String record_created_by;
 	private String record_last_modified;
+	private boolean order_cancelled;
 	
 	
+	public boolean isOrder_cancelled() {
+		return order_cancelled;
+	}
+	public void setOrder_cancelled(boolean order_cancelled) {
+		this.order_cancelled = order_cancelled;
+	}
 	public String getRecord_created_by() {
 		return record_created_by;
 	}
